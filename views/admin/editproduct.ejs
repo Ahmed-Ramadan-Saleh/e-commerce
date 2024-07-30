@@ -255,16 +255,6 @@
             <p class="fs-5">id : <%= data._id %></p>
           </div>
 
-
-
-
-
-
-
-
-
-
-
           <form
             class="m-4"
             action="/updatproduct/<%= data._id %>?_method=PUT"
@@ -310,10 +300,10 @@
               />
             </div>
 
-            <div  class="mb-3 d-flex">
+            <div class="mb-3 d-flex">
               <% data.images.forEach((element, index) => { %>
-               
-                <div
+
+              <div
                 style="width: 25%; height: 25%"
                 class="m-2 text-center p-2 border rounded-top"
               >
@@ -324,38 +314,41 @@
                   src="<%= element %>"
                   alt=""
                 />
-  
+
                 <div
                   id="btn"
                   class="d-flex justify-content-between align-items-center"
                 >
-                <!-- form update image -->
-                <label for="file<%= index %>"    class="d-block btn btn-bd-primary px-4 mx-3 " onclick="Counter('<%= index %>')">Update</label>
-  
-                <input id="file<%= index %>" name="image"   class="d-none" type="file" >
+                  <!-- form update image -->
+                  <label
+                    for="file<%= index %>"
+                    class="d-block btn btn-bd-primary px-4 mx-3"
+                    onclick="Counter('<%= index %>')"
+                    >Update</label
+                  >
 
-                
-              <!-- form delete image -->
-                
-                <button type="button" class="d-block btn btn-danger px-4 mx-3" onclick="deleteImage('<%= element %>')">Delete</button>
+                  <input
+                    id="file<%= index %>"
+                    name="image"
+                    class="d-none"
+                    type="file"
+                  />
 
-              
-              
-              
+                  <!-- form delete image -->
+
+                  <button
+                    type="button"
+                    class="d-block btn btn-danger px-4 mx-3"
+                    onclick="deleteImage('<%= element %>')"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
 
-            </div>
-              
               <% }) %>
 
-              <div id="numberImage">
-
-              </div>
-
-
-
-
-
+              <div id="numberImage"></div>
             </div>
 
             <label for="uploudAll" class="d-block btn btn-primary mx-3"
@@ -363,74 +356,41 @@
             >
             <input id="uploudAll" class="d-none" type="submit" />
           </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
       </div>
     </main>
-
-
-
-
-
 
     <script>
       // deleteImage
       function deleteImage(imageUrl) {
         // إنشاء نموذج جديد لإرسال طلب حذف الصورة
-        var form = document.createElement('form');
-        form.method = 'POST';
-        form.action = '/deleteimage';
-        
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = "/deleteimage";
+
         // إضافة مدخل مخفي يحتوي على رابط الصورة ليتم إرساله إلى السيرفر
-        var input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = 'image';
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "image";
         input.value = imageUrl;
-      
+
         form.appendChild(input);
         document.body.appendChild(form);
         form.submit();
       }
-
-      
-
-
-
-      </script>
+    </script>
     <script>
-       function Counter(count) {
+      function Counter(count) {
         console.log(count);
-      const idInput = document.getElementById(`file${count}`);
-      const idImage = document.getElementById(`IMGELEMENT${count}`);
-      idInput.addEventListener("change", (eo) => {
-        idImage.src = URL.createObjectURL(eo.target.files[0]);
-      });
-      // getIndexImage
+        const idInput = document.getElementById(`file${count}`);
+        const idImage = document.getElementById(`IMGELEMENT${count}`);
+        idInput.addEventListener("change", (eo) => {
+          idImage.src = URL.createObjectURL(eo.target.files[0]);
+        });
+        // getIndexImage
 
-      numberImage.innerHTML= `<input class="d-none" name="imageindex" value="${count}" type="text">`
-
-    }
+        numberImage.innerHTML = `<input class="d-none" name="imageindex" value="${count}" type="text">`;
+      }
     </script>
 
     <script src="../js/bootstrap.bundle.min.js"></script>
