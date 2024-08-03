@@ -50,10 +50,10 @@ const get_admin_product = async (req, res) => {
   await createproduct
     .find()
     .then((allproducts) => {
-      res.render("admin/products", {
+      res.render("admin/manageProducts/manageproducts", {
         data: allproducts,
         momen_t: moment,
-        mytitle: "products",
+        mytitle: "manageproducts",
       });
     })
     .catch((error) => {
@@ -64,7 +64,7 @@ const get_admin_product = async (req, res) => {
 const get_adminViewProduct = async (req, res) => {
   const viewProduct = await createproduct.findById(req.params.id);
   if (viewProduct) {
-    res.render("admin/viewproduct", {
+    res.render("admin/manageProducts/viewproduct", {
       data: viewProduct,
       mytitle: "viewproduct",
     });
@@ -83,7 +83,7 @@ const get_adminEditProduct = async (req, res) => {
     );
     res.cookie("jwt_product", token, { httpOnly: true, maxAge: 86400000 });
 
-    res.render("admin/editproduct", {
+    res.render("admin/manageProducts/editproduct", {
       mytitle: "editproduct",
       data: editProduct,
     });

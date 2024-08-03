@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= mytitle %></title>
+    <!-- Add Bootstrap Icons CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sidebars.css">
+
+<style>
+  
+  body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background-color: #f4f6f9;
+      padding: 20px;
+  }
+  .settings-container {
+      width:100%;
+      margin: auto;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  .settings-header {
+      margin-bottom: 30px;
+      text-align: center;
+  }
+  .settings-header h2 {
+      font-size: 36px;
+      margin: 0;
+  }
+  .section {
+      margin-bottom: 40px;
+  }
+  .section h3 {
+      font-size: 28px;
+      margin-bottom: 15px;
+  }
+  .section p {
+      font-size: 18px;
+      color: #555;
+      margin: 0;
+  }
+  .form-group {
+      margin-bottom: 20px;
+  }
+  .form-group label {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 5px;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 16px;
+  }
+  .form-group input[type="checkbox"] {
+      width: auto;
+      margin-right: 10px;
+  }
+  .btn {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+  }
+  .btn:hover {
+      background-color: #0056b3;
+  }
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+          font-size: 14px;
+      }
+  }
+
+
+  
+  /* New dark mode styles for the settings-container */
+  .dark-mode .settings-container {
+      background-color: #202324; /* Background color for dark mode */
+      color: #aba499; /* Text color for dark mode */
+  }
+
+
+.dark-mode .form-group input,
+.dark-mode .form-group select,
+.dark-mode .form-group textarea {
+    background-color: #202324; /* Background color for dark mode */
+    color: #aba499; /* Text color for dark mode */
+    border-color: #444; /* Optional: border color for dark mode */
+}
+
+</style>
+
+  
+</head>
+<body>
+  
+  <%- include('../component/admincompo/sidebar.ejs') %>
+  
+    <div style="margin-left: 20px;"  class="settings-container">
+      <div class="settings-header">
+          <h2>Settings</h2>
+      </div>
+  
+      <div class="section">
+          <h3>Account Settings</h3>
+          <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" id="username" placeholder="Enter your username">
+          </div>
+          <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" placeholder="Enter your email">
+          </div>
+          <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" id="password" placeholder="Enter your password">
+          </div>
+          <div class="form-group">
+              <label for="confirm-password">Confirm Password</label>
+              <input type="password" id="confirm-password" placeholder="Confirm your password">
+          </div>
+      </div>
+  
+      <div class="section">
+          <h3>System Settings</h3>
+          <div class="form-group">
+              <label for="timezone">Timezone</label>
+              <select id="timezone">
+                  <option value="UTC">UTC</option>
+                  <option value="GMT">GMT</option>
+                  <option value="CET">CET</option>
+                  <option value="EST">EST</option>
+                  <!-- Add more options as needed -->
+              </select>
+          </div>
+          <div class="form-group">
+              <label for="language">Language</label>
+              <select id="language">
+                  <option value="en">English</option>
+                  <option value="ar">Arabic</option>
+                  <option value="fr">French</option>
+                  <option value="es">Spanish</option>
+                  <!-- Add more options as needed -->
+              </select>
+          </div>
+      </div>
+  
+      <div class="section">
+          <h3>Email Notifications</h3>
+          <div class="form-group">
+              <label>
+                  <input type="checkbox" id="order-notifications">
+                  Receive order notifications
+              </label>
+          </div>
+          <div class="form-group">
+              <label>
+                  <input type="checkbox" id="promotion-notifications">
+                  Receive promotional notifications
+              </label>
+          </div>
+      </div>
+  
+      <div class="section">
+          <h3>Security Settings</h3>
+          <div class="form-group">
+              <label for="two-factor-auth">Enable Two-Factor Authentication</label>
+              <input type="checkbox" id="two-factor-auth">
+          </div>
+          <div class="form-group">
+              <label for="security-question">Security Question</label>
+              <input type="text" id="security-question" placeholder="Enter your security question">
+          </div>
+          <div class="form-group">
+              <label for="security-answer">Security Answer</label>
+              <input type="text" id="security-answer" placeholder="Enter your security answer">
+          </div>
+      </div>
+  
+      <div class="section">
+          <h3>Payment Settings</h3>
+          <div class="form-group">
+              <label for="payment-methods">Payment Methods</label>
+              <select id="payment-methods">
+                  <option value="credit-card">Credit Card</option>
+                  <option value="paypal">PayPal</option>
+                  <option value="bank-transfer">Bank Transfer</option>
+                  <!-- Add more options as needed -->
+              </select>
+          </div>
+          <div class="form-group">
+              <label for="currency">Currency</label>
+              <select id="currency">
+                  <option value="usd">USD</option>
+                  <option value="eur">EUR</option>
+                  <option value="gbp">GBP</option>
+                  <!-- Add more options as needed -->
+              </select>
+          </div>
+      </div>
+  
+      <div class="section">
+          <h3>Shipping Settings</h3>
+          <div class="form-group">
+              <label for="shipping-methods">Shipping Methods</label>
+              <select id="shipping-methods">
+                  <option value="standard">Standard Shipping</option>
+                  <option value="express">Express Shipping</option>
+                  <option value="overnight">Overnight Shipping</option>
+                  <!-- Add more options as needed -->
+              </select>
+          </div>
+          <div class="form-group">
+              <label for="shipping-rates">Shipping Rates</label>
+              <textarea id="shipping-rates" rows="4" placeholder="Define your shipping rates here..."></textarea>
+          </div>
+      </div>
+  
+      <div class="section">
+          <h3>Tax Settings</h3>
+          <div class="form-group">
+              <label for="tax-rates">Tax Rates</label>
+              <textarea id="tax-rates" rows="4" placeholder="Define your tax rates here..."></textarea>
+          </div>
+      </div>
+  
+      <div class="section">
+          <h3>Storage Settings</h3>
+          <div class="form-group">
+              <label for="inventory-level">Inventory Level Alert</label>
+              <input type="number" id="inventory-level" placeholder="Enter inventory level for alerts">
+          </div>
+          <div class="form-group">
+              <label for="storage-location">Storage Location</label>
+              <input type="text" id="storage-location" placeholder="Enter storage location">
+          </div>
+      </div>
+  
+      <div class="form-group">
+          <button class="btn" type="submit">Save Changes</button>
+      </div>
+  </div>
+  
+  
+  <script src="../js/sidebars.js"></script>
+</body>
+</html>

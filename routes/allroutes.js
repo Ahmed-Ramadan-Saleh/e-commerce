@@ -41,8 +41,57 @@ router.get("/logout", controllerrr.get_logout);
 
 // -------------------
 //Admin
+// get admin dashboard
+router.get("/admin/dashboard", (req, res) => {
+  try {
+    res.render("admin/dashboard", { mytitle: "dashboard" });
+  } catch (error) {
+    console.log("have error in get_dashboard", error);
+  }
+});
+// get admin admininfo
+router.get("/admin/admininfo", (req, res) => {
+  try {
+    res.render("admin/admininfo", { mytitle: "admininfo" });
+  } catch (error) {
+    console.log("have error in get_admininfo", error);
+  }
+});
+// get admin analytics
+router.get("/admin/analytics", (req, res) => {
+  try {
+    res.render("admin/analytics", { mytitle: "analytics" });
+  } catch (error) {
+    console.log("have error in get_analytics", error);
+  }
+});
+// get admin customers
+router.get("/admin/customers", (req, res) => {
+  try {
+    res.render("admin/customers", { mytitle: "customers" });
+  } catch (error) {
+    console.log("have error in get_customers", error);
+  }
+});
+// get admin orders
+router.get("/admin/orders", (req, res) => {
+  try {
+    res.render("admin/orders", { mytitle: "orders" });
+  } catch (error) {
+    console.log("have error in get_orders", error);
+  }
+});
 
-// get /admin/products
+// get admin settings
+router.get("/admin/settings", (req, res) => {
+  try {
+    res.render("admin/settings", { mytitle: "settings" });
+  } catch (error) {
+    console.log("have error in get_settings", error);
+  }
+});
+
+// get /admin/manageproducts
 router.get("/admin/products", controllerrr.get_admin_product);
 
 // get /admin/viewproduct
@@ -61,13 +110,15 @@ router.post("/signup", controllerrr.post_signup);
 router.post("/login", controllerrr.post_login);
 
 // post addproduct
-router.post("/addproduct",
+router.post(
+  "/addproduct",
   upload.array("photos", 12),
   controllerrr.post_addProduct
 );
 
 // update product
-router.put("/updatproduct/:id",
+router.put(
+  "/updatproduct/:id",
   upload.single("image"),
   controllerrr.put_updatproduct
 );
