@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= mytitle %></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../css/footer.css">
+
+    <style>
+        /* Styles for dark and light mode */
+        body.light-mode {
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+
+        .card.light-mode {
+            background-color: #ffffff;
+        }
+
+        body.dark-mode {
+            background-color: #343a40;
+            color: #f8f9fa;
+        }
+
+        .card.dark-mode {
+            background-color: #495057;
+        }
+
+        /* Toggle Button Styles */
+        .toggle-mode-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        footer {
+            padding: 10px 0;
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+        footer a {
+            color: #fff;
+        }
+
+        footer a:hover {
+            color: #adb5bd;
+        }
+    </style>
+</head>
+<body class="light-mode">
+
+<!-- Navbar -->
+<%- include('../component/navbar.ejs') %>
+
+
+<!-- Track Order Section -->
+<div class="container mt-5">
+    <h2>Track Your Order</h2>
+    <div class="card shadow-sm light-mode">
+        <div class="card-body">
+            <h5 class="card-title">Order Tracking</h5>
+            <form>
+                <div class="form-group">
+                    <label for="orderNumber">Enter Your Order Number</label>
+                    <input type="text" class="form-control" id="orderNumber" placeholder="Order Number" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Track Order</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Order Status -->
+    <div class="card shadow-sm light-mode mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Order Status</h5>
+            <div id="orderStatus">
+                <!-- Sample Order Status -->
+                <p><strong>Order ID:</strong> #12345</p>
+                <p><strong>Status:</strong> Shipped</p>
+                <p><strong>Estimated Delivery:</strong> August 7, 2024</p>
+                <p><strong>Current Location:</strong> New York, NY</p>
+                <h6>Tracking Details:</h6>
+                <ul>
+                    <li>Order Received - July 30, 2024</li>
+                    <li>Order Processed - July 31, 2024</li>
+                    <li>Shipped - August 1, 2024</li>
+                    <li>Out for Delivery - August 6, 2024</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<%- include('../component/footer.ejs') %>
+
+
+<!-- Toggle Button -->
+<button class="btn btn-secondary toggle-mode-btn" id="toggle-mode"><i class="fas fa-moon"></i> Dark Mode</button>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // Toggle Dark/Light Mode
+    document.getElementById('toggle-mode').addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        document.querySelectorAll('.card').forEach(card => card.classList.toggle('dark-mode'));
+        this.innerHTML = document.body.classList.contains('dark-mode') ? '<i class="fas fa-sun"></i> Light Mode' : '<i class="fas fa-moon"></i> Dark Mode';
+    });
+</script>
+</body>
+</html>

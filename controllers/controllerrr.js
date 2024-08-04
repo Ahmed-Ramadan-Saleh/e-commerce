@@ -16,20 +16,11 @@ cloudinary.config({
 });
 
 // Get Requests
-const get_index = (req, res) => {
-  res.render("index", { mytitle: "home" });
-};
 
-const get_about = (req, res) => {
-  res.render("product/about", { mytitle: "about" });
-};
 
-const get_product = (req, res) => {
-  res.render("product/product", { mytitle: "product" });
-};
-const get_blog = (req, res) => {
-  res.render("product/blog", { mytitle: "blog" });
-};
+
+
+
 
 const get_contact = (req, res) => {
   res.render("Auth/contact", { mytitle: "contact" });
@@ -41,10 +32,7 @@ const get_login = (req, res) => {
   res.render("Auth/login", { mytitle: "login" });
 };
 
-const get_logout = (req, res) => {
-  res.cookie("jwt", "", { maxAge: 1 });
-  res.redirect("/");
-};
+
 
 const get_admin_product = async (req, res) => {
   await createproduct
@@ -212,14 +200,9 @@ const delete_product = async (req, res) => {
 }
 
 module.exports = {
-  get_index,
-  get_about,
-  get_product,
-  get_blog,
   get_contact,
   get_signup,
   get_login,
-  get_logout,
   get_admin_product,
   get_adminViewProduct,
   get_adminEditProduct,
