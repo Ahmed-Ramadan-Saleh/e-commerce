@@ -72,7 +72,7 @@
     </ol>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="https://via.placeholder.com/1920x500" class="d-block w-100" alt="Slide 1"style="width: 1920px; height: 500px;">
+            <img src="../images/pc_layout.png" class="d-block w-100" alt="Slide 1"style="width: 1920px; height: 500px;">
             <div class="carousel-caption d-none d-md-block">
                 <h5>Welcome to Our Store</h5>
                 <p>The best products at the best prices!</p>
@@ -107,87 +107,61 @@
 <div class="container mt-5">
     <h2 class="text-center">Promotional Offers</h2>
     <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Offer 1">
-                <div class="card-body">
-                    <h5 class="card-title">Promotional Offer 1</h5>
-                    <p class="card-text">20% off on all products!</p>
-                    <a href="#" class="btn btn-primary">Shop Now</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Offer 2">
-                <div class="card-body">
-                    <h5 class="card-title">Promotional Offer 2</h5>
-                    <p class="card-text">Buy one, get one free!</p>
-                    <a href="#" class="btn btn-primary">Shop Now</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Offer 3">
-                <div class="card-body">
-                    <h5 class="card-title">Promotional Offer 3</h5>
-                    <p class="card-text">Free shipping on orders over $100!</p>
-                    <a href="#" class="btn btn-primary">Shop Now</a>
-                </div>
-            </div>
+      <% let arr =[data[0],data[1],data[2],data[3],data[4],data[5]] %>
+<% arr.forEach(element => { %>
+  <div class="col-md-4" >
+    <div class="card"style="margin-top:5px;">
+        <img src="<%= element.images[0] %>" class="card-img-top" alt="Offer 1" style="width: 100%; height: 300px;">
+        <div class="card-body">
+            <h5 class="card-title"><%= element.productname %></h5>
+            <p class="card-text">20% off on all products!</p>
+<div class=" d-flex justify-content-between align-item-center">
+  
+              <a href="#" class="btn btn-primary">Shop Now</a>
+              <a href="/productdetails/<%= element._id %>" class="btn btn-primary px-4">View </a>
+</div>
         </div>
     </div>
 </div>
+<% }) %>
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
 
 <!-- Featured Products Section -->
+  <!-- store product in array -->
+  <% let newdata =[] %>
+  <% for( let item = 1; item < 5; item++ ) { %>
+    <% newdata.push(data[data.length -item])    %>
+  <% } %>
+
 <div class="container mt-5">
     <h2 class="text-center">Featured Products</h2>
     <div class="row">
+      <% newdata.forEach(element => { %>
         <div class="col-md-3">
-            <div class="card">
-                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Product 1">
-                <div class="card-body">
-                    <h5 class="card-title">Product 1</h5>
-                    <p class="card-text">Short description of Product 1</p>
-                    <p class="card-text"><strong>Price:</strong> $100</p>
-                    <a href="#" class="btn btn-primary">Buy Now</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card">
-                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Product 2">
-                <div class="card-body">
-                    <h5 class="card-title">Product 2</h5>
-                    <p class="card-text">Short description of Product 2</p>
-                    <p class="card-text"><strong>Price:</strong> $200</p>
-                    <a href="#" class="btn btn-primary">Buy Now</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card">
-                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Product 3">
-                <div class="card-body">
-                    <h5 class="card-title">Product 3</h5>
-                    <p class="card-text">Short description of Product 3</p>
-                    <p class="card-text"><strong>Price:</strong> $150</p>
-                    <a href="#" class="btn btn-primary">Buy Now</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card">
-                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Product 4">
-                <div class="card-body">
-                    <h5 class="card-title">Product 4</h5>
-                    <p class="card-text">Short description of Product 4</p>
-                    <p class="card-text"><strong>Price:</strong> $250</p>
-                    <a href="#" class="btn btn-primary">Buy Now</a>
-                </div>
-            </div>
-        </div>
+          <div class="card">
+              <img src="<%= element.images[0] %>" class="card-img-top" alt="Product 1" style="width: 100%;height: 250px;">
+              <div class="card-body">
+                  <h5 class="card-title"><%= element.productname %></h5>
+                  <p class="card-text" style="width: 100%;height: 210px;"><%= element.discription %></p>
+                  <p class="card-text"><strong>Price:</strong> $100</p>
+                  <a href="#" class="btn btn-primary">Buy Now</a>
+              </div>
+          </div>
+      </div>
+      <% }) %>
+
+
     </div>
 </div>
 

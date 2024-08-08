@@ -98,50 +98,21 @@
     <!-- Product Grid -->
     <div class="row" id="productGrid">
         <!-- Sample Product Card -->
-        <div class="col-md-3 product-card" data-category="electronics">
+         <% products.forEach(item => { %>
+          <div class="col-md-3 product-card" >
             <div class="card shadow-sm">
-                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Product 1">
+                <img src="<%= item.images[0] %>" class="card-img-top w-100" alt="Product 1" style="height: 250px;">
                 <div class="card-body">
-                    <h5 class="card-title">Product 1</h5>
-                    <p class="card-text">Short description of Product 1</p>
-                    <p class="card-text"><strong>Price:</strong> $100</p>
+                    <h5 class="card-title"><%= item.productname %></h5>
+    <!-- get the first 10 words only of description -->
+<% let text = item.discription; let words = text.split(' '); let first10words = words.slice(0, 7); first10words.join(' '); %>
+                    <p class="card-text"><%= first10words %></p>
+                    <p class="card-text"><strong>Price:</strong> $<%= item.price %></p>
                     <a href="#" class="btn btn-primary">Buy Now</a>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 product-card" data-category="fashion">
-            <div class="card shadow-sm">
-                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Product 2">
-                <div class="card-body">
-                    <h5 class="card-title">Product 2</h5>
-                    <p class="card-text">Short description of Product 2</p>
-                    <p class="card-text"><strong>Price:</strong> $200</p>
-                    <a href="#" class="btn btn-primary">Buy Now</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 product-card" data-category="home">
-            <div class="card shadow-sm">
-                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Product 3">
-                <div class="card-body">
-                    <h5 class="card-title">Product 3</h5>
-                    <p class="card-text">Short description of Product 3</p>
-                    <p class="card-text"><strong>Price:</strong> $150</p>
-                    <a href="#" class="btn btn-primary">Buy Now</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 product-card" data-category="beauty">
-            <div class="card shadow-sm">
-                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Product 4">
-                <div class="card-body">
-                    <h5 class="card-title">Product 4</h5>
-                    <p class="card-text">Short description of Product 4</p>
-                    <p class="card-text"><strong>Price:</strong> $250</p>
-                    <a href="#" class="btn btn-primary">Buy Now</a>
-                </div>
-            </div>
-        </div>
+         <% }) %>
         <!-- Add more products as needed -->
     </div>
 </div>

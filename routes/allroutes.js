@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const controllerrr = require("../controllers/controllerrr");
 const createproduct = require("../model/newproduct");
+const moment = require("moment");
 const cloudinary = require("cloudinary").v2;
 // Configuration
 cloudinary.config({
@@ -23,7 +24,7 @@ router.get("/", async(req, res) => {
   try {
     // get all product
     const allproduct = await createproduct.find();
-    res.render("product/homepage", { mytitle: "homepage", data: allproduct });
+    res.render("product/homepage", { mytitle: "homepage", data: allproduct, momen_t: moment });
 
   } catch (error) {
     console.log("have error in get_homepage", error);
@@ -50,13 +51,13 @@ router.get("/orders", async(req, res) => {
 
   }
 });
-// get pay
-router.get("/pay", async(req, res) => {
+// get Checkout
+router.get("/Checkout", async(req, res) => {
   try {
-    res.render("product/pay", { mytitle: "pay" });
+    res.render("product/pay", { mytitle: "Checkout" });
 
   } catch (error) {
-    console.log("have error in get_pay", error);
+    console.log("have error in get_Checkout", error);
 
   }
 });
@@ -73,7 +74,8 @@ router.get("/productdetails", async(req, res) => {
 // get productpage
 router.get("/productpage", async(req, res) => {
   try {
-    res.render("product/productpage", { mytitle: "productpage" });
+    const allproduct =await createproduct.find();
+    res.render("product/productpage", { mytitle: "productpage", products:allproduct });
 
   } catch (error) {
     console.log("have error in get_productpage", error);
@@ -169,7 +171,7 @@ router.get("/admin/settings", (req, res) => {
   }
 });
 // get admin loginAdmin
-router.get("/admin/loginAdmin", (req, res) => {
+router.get("/admin/login", (req, res) => {
   try {
     res.render("admin/loginAdmin", { mytitle: "loginAdmin" });
   } catch (error) {
