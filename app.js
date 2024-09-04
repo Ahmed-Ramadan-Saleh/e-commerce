@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+
 const dotenv = require("dotenv").config();
 const port = process.env.PORT || 3000;
 const mongoose = require("mongoose");
@@ -19,11 +20,15 @@ const allroutes = require("./routes/allroutes");
 
 //create static files in folder named public
 app.use(express.static("public"));
+
 //defination data coming ==>> req.body
 app.use(express.urlencoded({ extended: true }));
+
 //using ejs template
 app.set("view engine", "ejs");
+
 app.use(cookieparser());
+app.use(express.json());
 app.use(allroutes);
 
 // auto refresh
