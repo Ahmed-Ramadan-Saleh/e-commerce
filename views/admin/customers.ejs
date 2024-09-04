@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= mytitle %></title>
+    <!-- Add Bootstrap Icons CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/sidebars.css" />
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        background-color: #f4f6f9;
+        padding: 20px;
+      }
+      .customers-container {
+        width: 100%;
+        margin: auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .customers-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .customers-header h2 {
+        font-size: 32px;
+        margin: 0;
+        /* color: #333; */
+      }
+      .add-customer-button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .add-customer-button:hover {
+        background-color: #0056b3;
+      }
+      .customers-table-container {
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      table th,
+      table td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+      }
+
+
+      .action-buttons button {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 5px;
+        font-size: 14px;
+      }
+      .edit-button {
+        background-color: #28a745;
+        color: white;
+      }
+      .delete-button {
+        background-color: #dc3545;
+        color: white;
+      }
+      .edit-button:hover {
+        background-color: #218838;
+      }
+      .delete-button:hover {
+        background-color: #c82333;
+      }
+      .add-customer-form {
+        margin-top: 30px;
+      }
+      .add-customer-form h3 {
+        font-size: 24px;
+        margin-bottom: 10px;
+        /* color: #333; */
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      .form-group label {
+        display: block;
+        font-size: 16px;
+        margin-bottom: 5px;
+      }
+      .form-group input,
+      .form-group textarea {
+        width: calc(100% - 20px);
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        font-size: 16px;
+      }
+      .form-group button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .form-group button:hover {
+        background-color: #0056b3;
+      }
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .customers-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .add-customer-button {
+          margin-top: 10px;
+        }
+      }
+      /* light and dark mode */
+      .dark-mode .customers-container {
+        background-color: #202324; /* لون الخلفية للوضع الليلي */
+        color: #aba499; /* لون النص للوضع الليلي */
+      }
+      .dark-mode .table th {
+        background-color: #202324; /* لون الخلفية للوضع الليلي */
+        color: #aba499; /* لون النص للوضع الليلي */
+      }
+      .dark-mode .form-group input {
+        background-color: #202324; /* لون الخلفية للوضع الليلي */
+        color: #aba499; /* لون النص للوضع الليلي */
+      }
+      .dark-mode .form-group textarea {
+        background-color: #202324; /* لون الخلفية للوضع الليلي */
+        color: #aba499; /* لون النص للوضع الليلي */
+      }
+    </style>
+  </head>
+  <body>
+    <div style="width: 100%; display: flex">
+      <%- include('../component/admincompo/sidebar.ejs') %>
+      <div style="width: 100%; margin: 20px" class="customers-container">
+        <div class="customers-header">
+          <h2>Customers</h2>
+          <button class="add-customer-button">Add Customer</button>
+        </div>
+        <div class="customers-table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Customer ID</th>
+                <th>Customer Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>John Doe</td>
+                <td>johndoe@example.com</td>
+                <td>+123456789</td>
+                <td>123 Main St, City, Country</td>
+                <td class="action-buttons">
+                  <button class="edit-button">Edit</button>
+                  <button class="delete-button">Delete</button>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Jane Smith</td>
+                <td>janesmith@example.com</td>
+                <td>+987654321</td>
+                <td>456 Elm St, City, Country</td>
+                <td class="action-buttons">
+                  <button class="edit-button">Edit</button>
+                  <button class="delete-button">Delete</button>
+                </td>
+              </tr>
+              <!-- المزيد من العملاء يمكن إضافتهم هنا -->
+            </tbody>
+          </table>
+        </div>
+        <div class="add-customer-form">
+          <h3>Add New Customer</h3>
+          <form>
+            <div class="form-group">
+              <label for="customerName">Customer Name</label>
+              <input
+                type="text"
+                id="customerName"
+                name="customerName"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" required />
+            </div>
+            <div class="form-group">
+              <label for="address">Address</label>
+              <textarea
+                id="address"
+                name="address"
+                rows="4"
+                required
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <button type="submit">Add Customer</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/sidebars.js"></script>
+    <!-- Include chart library -->
+  </body>
+</html>

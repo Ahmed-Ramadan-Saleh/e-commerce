@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= mytitle %></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    
+    <style>
+        /* Styles for dark and light mode */
+        body.light-mode {
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+
+        .card.light-mode {
+            background-color: #ffffff;
+        }
+
+        body.dark-mode {
+            background-color: #343a40;
+            color: #f8f9fa;
+        }
+
+        .card.dark-mode {
+            background-color: #495057;
+        }
+
+        /* Toggle Button Styles */
+        .toggle-mode-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        footer {
+            padding: 10px 0;
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+        footer a {
+            color: #fff;
+        }
+
+        footer a:hover {
+            color: #adb5bd;
+        }
+
+        .contact-info i {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body class="light-mode">
+
+<!-- Navbar -->
+<%- include('../component/navbar.ejs') %>
+
+
+<!-- Contact Us Section -->
+<div class="container mt-5">
+    <h2>Contact Us</h2>
+    <div class="row">
+        <!-- Contact Information -->
+        <div class="col-md-6">
+            <div class="card shadow-sm light-mode">
+                <div class="card-body">
+                    <h5 class="card-title">Our Contact Information</h5>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Main Street, Suite 400, City, Country</p>
+                        <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                        <p><i class="fas fa-envelope"></i> support@example.com</p>
+                        <p><i class="fas fa-clock"></i> Mon - Fri: 9:00 AM - 6:00 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="col-md-6">
+            <div class="card shadow-sm light-mode">
+                <div class="card-body">
+                    <h5 class="card-title">Get in Touch</h5>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea class="form-control" id="message" rows="4" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<%- include('../component/footer.ejs') %>
+
+
+<!-- Toggle Button -->
+<button class="btn btn-secondary toggle-mode-btn" id="toggle-mode"><i class="fas fa-moon"></i> Dark Mode</button>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // Toggle Dark/Light Mode
+    document.getElementById('toggle-mode').addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        document.querySelectorAll('.card').forEach(card => card.classList.toggle('dark-mode'));
+        this.innerHTML = document.body.classList.contains('dark-mode') ? '<i class="fas fa-sun"></i> Light Mode' : '<i class="fas fa-moon"></i> Dark Mode';
+    });
+</script>
+</body>
+</html>
