@@ -2,9 +2,9 @@
   "name": "my-first-store",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "dev": "nodemon app.js"
+    "start": "node app.js",
+    "watch": "nodemon --ext *"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,7 @@
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
+    "express-validator": "^7.2.0",
     "jsonwebtoken": "^9.0.2",
     "livereload": "^0.9.3",
     "method-override": "^3.0.0",
