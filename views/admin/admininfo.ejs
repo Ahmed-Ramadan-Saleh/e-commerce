@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= mytitle %></title>
+    <!-- Add Bootstrap Icons CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sidebars.css">
+    <style>
+  body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background-color: #f8f9fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #343a40;
+  }
+  .admin-info-container {
+      background-color: #ffffff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+
+      max-width: 450px;
+      border: #202324 2px solid;
+      text-align: center;
+  }
+  .admin-info-container h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 28px;
+      /* color: #495057; */
+  }
+  .admin-info-container .profile-pic {
+      display: block;
+      margin: 0 auto 20px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .admin-info-container .info p {
+      margin: 10px 0;
+      font-size: 18px;
+      line-height: 1.6;
+  }
+  .admin-info-container .info p span {
+      font-weight: 600;
+      /* color: #212529; */
+  }
+  @media (max-width: 600px) {
+      .admin-info-container {
+          padding: 20px;
+      }
+      .admin-info-container .info p {
+          font-size: 16px;
+      }
+  }
+    /* light and dark mode */
+    .dark-mode .admin-info-container{
+  background-color: #202324; /* لون الخلفية للوضع الليلي */
+  color: #aba499; /* لون النص للوضع الليلي */
+}
+</style>
+</head>
+<body>
+  
+
+<div>
+      <%- include('../component/admincompo/sidebar.ejs') %>
+      <div class="admin-info-container">
+        <h2>Admin Information</h2>
+        <img src="path_to_profile_picture.jpg" alt="Admin Profile Picture" class="profile-pic">
+        <div class="info">
+            <p><span>Name:</span> John Doe</p>
+            <p><span>Email:</span> admin@example.com</p>
+            <p><span>Role:</span> Administrator</p>
+            <p><span>Joined:</span> January 1, 2020</p>
+        </div>
+    </div>
+</div>
+
+
+  
+  
+<script src="../js/sidebars.js"></script>
+</body>
+</html>

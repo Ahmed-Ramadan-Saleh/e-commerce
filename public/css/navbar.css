@@ -1,0 +1,37 @@
+/* Default light mode */
+.navbar-custom {
+  background-color: #f8f9fa; /* لون الخلفية */
+  color: #343a40; /* لون النص */
+}
+
+/* Dark mode */
+.dark-mode .navbar-custom {
+  background-color: #3b3c3d; /* لون الخلفية */
+  color: #f8f9fa; /* لون النص */
+}
+
+.navbar-custom .nav-link {
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+.navbar-custom .nav-link:hover {
+  color: #007bff; /* لون النص عند التحويم */
+}
+
+.navbar-custom .navbar-toggler {
+  border-color: transparent;
+}
+
+.navbar-custom .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23343a40' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.dark-mode .navbar-custom .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23f8f9fa' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.dark-mode .navbar-custom .nav-link:hover {
+  color: #66b2ff; /* لون النص عند التحويم في الوضع المظلم */
+}
+

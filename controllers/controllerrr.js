@@ -1,8 +1,12 @@
-const Authuser = require("../model/Authuser");
+
+// MODELS
 const createproduct = require("../model/newproduct");
+const AuthAdmin = require("../model/AuthAdmin");
+const Authuser = require("../model/Authuser");
+const mongoose = require("mongoose");
+
 const bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
-// to get cookies from browser
 const moment = require("moment");
 // send image
 const multer = require("multer");
@@ -15,45 +19,202 @@ cloudinary.config({
   api_secret: process.env.API_SECRET,
 });
 
-// Get Requests
-const get_index = (req, res) => {
-  res.render("index", { mytitle: "home" });
-};
+// ---------------------------------
+// FUNCTIONS GET REQUESTS FRONTEND
+// ---------------------------------
 
-const get_about = (req, res) => {
-  res.render("product/about", { mytitle: "about" });
-};
 
-const get_product = (req, res) => {
-  res.render("product/product", { mytitle: "product" });
-};
-const get_blog = (req, res) => {
-  res.render("product/blog", { mytitle: "blog" });
-};
+const get_homepage = async (req, res) => {
+  try {
+    // get all product
+    const allproduct = await createproduct.find();
 
-const get_contact = (req, res) => {
-  res.render("Auth/contact", { mytitle: "contact" });
-};
+    allproduct ? (newData = allproduct) : (newData = null);
+    res.render("product/homepage", {
+      mytitle: "homepage",
+      data: newData,
+      momen_t: moment,
+    });
+  } catch (error) {
+    console.log("have error in get_homepage", error);
+  }
+}
+
+const get_contact = async (req, res) => {
+  try {
+    res.render("product/contact", { mytitle: "contact" });
+  } catch (error) {
+    console.log("have error in get_contact", error);
+  }
+}
+
+const get_orders = async (req, res) => {
+  try {
+
+    res.render("product/orders", { mytitle: "orders" });
+  } catch (error) {
+    console.log("have error in get_orders", error);
+  }
+}
+
+const get_Checkout =async (req, res) => {
+  try {
+    const token = req.cookies.jwt_User;
+    var decoded = jwt.verify(token, process.env.PROTECT_KEY_JWT);
+
+    // account user
+    const getUser = await Authuser.findOne({ _id: decoded.id });
+    getUser.ProductCards.length > 0
+      ? (productCard = getUser.ProductCards)
+      : (productCard = null);
+
+    res.render("product/pay", { mytitle: "Checkout", Prodata: productCard });
+  } catch (error) {
+    console.log("have error in get_Checkout", error);
+  }
+}
+
+const get_productdetails =async (req, res) => {
+  try {
+    const getProduct = await createproduct.findById(req.params.id);
+
+    // get all product
+    const allproduct = await createproduct.find();
+    allproduct ? (newAll = allproduct) : (newAll = null);
+    getProduct ? (newOne = getProduct) : (newOne = null);
+    res.render("product/productdetails", {
+      mytitle: "productdetails",
+      ProductData: newOne,
+      productsAll: newAll,
+    });
+  } catch (error) {
+    console.log("have error in get_productdetails", error);
+  }
+}
+
+const get_productpage =async (req, res) => {
+  try {
+    const allproduct = await createproduct.find();
+    allproduct.length > 0 ? (arrdata = allproduct) : (arrdata = null);
+
+    res.render("product/productpage", {
+      mytitle: "productpage",
+      products: arrdata,
+    });
+  } catch (error) {
+    console.log("have error in get_productpage", error);
+  }
+}
+
+const get_ShoppingCart = async (req, res) => {
+  try {
+    const token = req.cookies.jwt_User;
+    var decoded = jwt.verify(token, process.env.PROTECT_KEY_JWT);
+
+    // account user
+    const getUser = await Authuser.findOne({ _id: decoded.id });
+    getUser.ProductCards
+      ? (UserProduct = getUser.ProductCards)
+      : (UserProduct = null);
+
+    res.render("product/ShoppingCart", {
+      mytitle: "ShoppingCart",
+      allcards: UserProduct,
+    });
+  } catch (error) {
+    console.log("have error in get_ShoppingCart", error);
+  }
+}
+
+const get_useraccount = async (req, res) => {
+  try {
+    const token = req.cookies.jwt_User;
+    var decoded = jwt.verify(token, process.env.PROTECT_KEY_JWT);
+
+    // account user
+    const getUserData = await Authuser.findOne({ _id: decoded.id });
+    getUserData ? (dataUser = getUserData) : (dataUser = null);
+    if (getUserData) {
+      res.render("product/useraccount", {
+        mytitle: "useraccount",
+        dataOfUser: dataUser,
+        momen_t: moment,
+      });
+    }
+  } catch (error) {
+    console.log("have error in get_useraccount", error);
+  }
+}
+
 const get_signup = (req, res) => {
-  res.render("Auth/signup", { mytitle: "signup" });
+  res.render("AuthUser/Signup", { mytitle: "signup" });
 };
 const get_login = (req, res) => {
-  res.render("Auth/login", { mytitle: "login" });
+  res.render("AuthUser/Login", { mytitle: "login" });
 };
 
-const get_logout = (req, res) => {
-  res.cookie("jwt", "", { maxAge: 1 });
-  res.redirect("/");
-};
+// -----------------------------------
+
+// ---------------------------------
+// FUNCTIONS GET REQUESTS BACKEND
+// ---------------------------------
+
+const get_admin_dashboard =(req, res) => {
+  try {
+    res.render("admin/dashboard", { mytitle: "dashboard" });
+  } catch (error) {
+    console.log("have error in get_dashboard", error);
+  }
+}
+
+const get_admin_admininfo = (req, res) => {
+  try {
+    res.render("admin/admininfo", { mytitle: "admininfo" });
+  } catch (error) {
+    console.log("have error in get_admininfo", error);
+  }
+}
+
+const get_admin_analytics = (req, res) => {
+  try {
+    res.render("admin/analytics", { mytitle: "analytics" });
+  } catch (error) {
+    console.log("have error in get_analytics", error);
+  }
+}
+
+const get_admin_customers = (req, res) => {
+  try {
+    res.render("admin/customers", { mytitle: "customers" });
+  } catch (error) {
+    console.log("have error in get_customers", error);
+  }
+}
+
+const get_admin_orders =(req, res) => {
+  try {
+    res.render("admin/orders", { mytitle: "orders" });
+  } catch (error) {
+    console.log("have error in get_orders", error);
+  }
+}
+
+const get_admin_settings =(req, res) => {
+  try {
+    res.render("admin/settings", { mytitle: "settings" });
+  } catch (error) {
+    console.log("have error in get_settings", error);
+  }
+}
 
 const get_admin_product = async (req, res) => {
   await createproduct
     .find()
     .then((allproducts) => {
-      res.render("admin/products", {
+      res.render("admin/manageProducts/manageproducts", {
         data: allproducts,
         momen_t: moment,
-        mytitle: "products",
+        mytitle: "manageproducts",
       });
     })
     .catch((error) => {
@@ -64,7 +225,7 @@ const get_admin_product = async (req, res) => {
 const get_adminViewProduct = async (req, res) => {
   const viewProduct = await createproduct.findById(req.params.id);
   if (viewProduct) {
-    res.render("admin/viewproduct", {
+    res.render("admin/manageProducts/viewproduct", {
       data: viewProduct,
       mytitle: "viewproduct",
     });
@@ -83,7 +244,7 @@ const get_adminEditProduct = async (req, res) => {
     );
     res.cookie("jwt_product", token, { httpOnly: true, maxAge: 86400000 });
 
-    res.render("admin/editproduct", {
+    res.render("admin/manageProducts/editproduct", {
       mytitle: "editproduct",
       data: editProduct,
     });
@@ -92,45 +253,118 @@ const get_adminEditProduct = async (req, res) => {
   }
 };
 
-//   -------------------------------------------
-// Post Requests
-
-const post_signup = async (req, res) => {
+const get_loginAdmin = (req, res) => {
   try {
-    //check feilds is null
-    if (req.body.username && req.body.email && req.body.password !== null) {
-      if (req.body.password === req.body.Confirmpassword) {
-        //check if email alreedy existed
-        const ExistedUser = await Authuser.findOne({ email: req.body.email });
-        if (ExistedUser == null) {
-          //create new user
-          Authuser.create(req.body)
-            .then((result) => {
-              //create jwt
-              const token = jwt.sign(
-                { id: result._id },
-                process.env.PROTECT_KEY_JWT
-              );
-              res.cookie("jwt", token, { httpOnly: true, maxAge: 86400000 });
+    res.render("admin/loginAdmin", { mytitle: "LoginAdmin" });
+  } catch (error) {
+    console.log("have error in get_loginAdmin", error);
+  }
+}
 
-              res.redirect("/");
-            })
-            .catch((error) => {
-              console.log("error in signup new user", error);
-            });
-        } else {
-          console.log("email alreedy existed");
+//   -------------------------------------------
+//   -------------------------------------------
+
+// ---------------------------------
+// FUNCTIONS POST REQUESTS FRONTEND
+// ---------------------------------
+
+const post_addtocard =async (req, res) => {
+  const token = req.cookies.jwt_User;
+  var decoded = jwt.verify(token, process.env.PROTECT_KEY_JWT);
+
+  // find product
+  const getproduct = await createproduct.findOne({ _id: req.params.id });
+  if (getproduct) {
+    // update one
+    const AddProduct = await Authuser.updateOne(
+      { _id: decoded.id },
+      { $push: { ProductCards: getproduct } }
+    );
+    res.redirect("/ShoppingCart");
+  }
+}
+
+const post_removeoncard =async (req, res) => {
+  const token = req.cookies.jwt_User;
+  var decoded = jwt.verify(token, process.env.PROTECT_KEY_JWT);
+
+  // remove Product from cards
+  const removeProduct = await Authuser.updateOne(
+    { _id: decoded.id },
+    {
+      $pull: {
+        ProductCards: { _id: new mongoose.Types.ObjectId(req.params.id) },
+      },
+    }
+  );
+
+  res.redirect("/ShoppingCart");
+}
+
+const post_updatedatauser =async (req, res) => {
+  const token = req.cookies.jwt_User;
+  var decoded = jwt.verify(token, process.env.PROTECT_KEY_JWT);
+
+  const updatedatauser = await Authuser.updateOne(
+    { _id: decoded.id },
+    req.body
+  );
+
+  res.redirect("/useraccount");
+}
+
+const post_search =async (req, res) => {
+  let searchWords = req.body.search.toLowerCase().trim();
+
+  if (searchWords) {
+    const products = await createproduct.find();
+    if (products.length > 0) {
+      let arrsearch = [];
+
+      products.forEach((element) => {
+        console.log(element.productname.toLowerCase().trim() == searchWords);
+        if (element.productname.toLowerCase().trim() == searchWords) {
+          arrsearch.push(element);
         }
-      } else {
-        console.log("please confirm enter password");
-      }
+      });
+
+      // بدلاً من إعادة التوجيه، استخدم res.render لتمرير البيانات
+      res.render("product/productpage", { products: arrsearch,mytitle: "productpage" });
     } else {
-      console.log("please enter data inside the inputs");
+      // إذا لم يتم العثور على أي منتجات
+      res.render("product/productpage", { products: [],mytitle: "productpage" });
+    }
+  } else {
+    // إذا كان حقل البحث فارغًا
+    res.render("product/productpage", { products: [],mytitle: "productpage" });
+  }
+ }
+
+const post_signup_User =async (req, res) => {
+  const { password, Confirmpassword } = req.body;
+
+  if (password === Confirmpassword) {
+    //check if email alreedy existed
+    const ExistedUser = await Authuser.findOne({ email: req.body.email });
+    if (!ExistedUser) {
+      //create new user
+      const newUser = await Authuser.create(req.body);
+      //create jwt
+      const token = jwt.sign({ id: newUser._id }, process.env.PROTECT_KEY_JWT);
+      res.cookie("jwt_User", token, { httpOnly: true, maxAge: 86400000 });
+
+      res.redirect("/");
+    } else {
+      res.json({ emailExisted: "email alreedy existed" });
       res.redirect("/signup");
     }
-  } catch (error) {}
-};
-const post_login = async (req, res) => {
+  } else {
+    res.json({ errorPassword: "password not equal confirmPassword" });
+    res.redirect("/signup");
+  }
+}
+
+const post_login_User =async (req, res) => {
   try {
     //chech email
     const ExistedUser = await Authuser.findOne({ email: req.body.email });
@@ -141,13 +375,12 @@ const post_login = async (req, res) => {
         ExistedUser.password
       );
       if (match) {
-        console.log("correct email & password");
         //create jwt
         const token = jwt.sign(
           { id: ExistedUser._id },
           process.env.PROTECT_KEY_JWT
         );
-        res.cookie("jwt", token, { httpOnly: true, maxAge: 86400000 });
+        res.cookie("jwt_User", token, { httpOnly: true, maxAge: 86400000 });
 
         res.redirect("/");
       } else {
@@ -157,9 +390,17 @@ const post_login = async (req, res) => {
       console.log("email not found");
     }
   } catch (error) {}
-};
+}
+
+// ------------------------------------
+
+// ---------------------------------
+// FUNCTIONS POST REQUESTS FRONTEND
+// ---------------------------------
+
 const post_addProduct = async (req, res, next) => {
   // create newProduct
+  console.log(req.body);
   const newproduct = await createproduct.create(req.body);
   // restore image in product
   for (const img of req.files) {
@@ -211,22 +452,93 @@ const delete_product = async (req, res) => {
   res.redirect("/admin/products");
 }
 
+const post_admin_signup =  async (req, res) => {
+  const objError = validationResult(req);
+  if (objError.errors.length > 0) {
+    return res.json({
+      validationerrors: objError.errors,
+    });
+  }
+
+  //is email existed
+  const isExistedAdmin = await AuthAdmin.findOne({ email: req.body.email });
+
+  if (!isExistedAdmin) {
+    //create new user
+    const newAdmin = await AuthAdmin.create(req.body);
+    //create jwt
+    const token = jwt.sign({ id: newAdmin._id }, process.env.PROTECT_KEY_JWT);
+    res.cookie("jwt_Admin", token, { httpOnly: true, maxAge: 86400000 });
+    res.json({ id: newAdmin._id });
+  } else {
+    res.json({ emailExisted: "email alreedy existed" });
+  }
+}
+
+const post_admin_login = async (req, res) => {
+  try {
+    //chech email
+    const ExistedAdmin = await AuthAdmin.findOne({ email: req.body.email });
+    if (ExistedAdmin) {
+      //check password
+      const match = await bcrypt.compare(
+        req.body.password,
+        ExistedAdmin.password
+      );
+
+      if (match) {
+        //create jwt
+        const token = jwt.sign(
+          { id: ExistedAdmin._id },
+          process.env.PROTECT_KEY_JWT
+        );
+        res.cookie("jwt_Admin", token, { httpOnly: true, maxAge: 86400000 });
+        res.json({ id: ExistedAdmin._id });
+      } else {
+        res.json({ wrongPassword: "wrong password" });
+      }
+    } else {
+      res.json({ wrongEmail: "email not found" });
+    }
+  } catch (error) {
+    console.log("error in admin login post");
+  }
+}
+
 module.exports = {
-  get_index,
-  get_about,
-  get_product,
-  get_blog,
+  get_homepage,
   get_contact,
+  get_orders,
+  get_Checkout,
+  get_productdetails,
+  get_productpage,
+  get_ShoppingCart,
+  get_useraccount,
   get_signup,
   get_login,
-  get_logout,
+  // ------
+  get_admin_dashboard,
+  get_admin_admininfo,
+  get_admin_analytics,
+  get_admin_customers,
+  get_admin_orders,
+  get_admin_settings,
   get_admin_product,
   get_adminViewProduct,
   get_adminEditProduct,
-  post_signup,
-  post_login,
+  get_loginAdmin,
+  // ------
+  post_addtocard,
+  post_removeoncard,
+  post_updatedatauser,
+  post_search,
+  post_signup_User,
+  post_login_User,
+  // ------
   post_addProduct,
   put_updatproduct,
   post_deleteimage,
-  delete_product
+  delete_product,
+  post_admin_signup,
+  post_admin_login
 };

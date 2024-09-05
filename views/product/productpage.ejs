@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= mytitle %></title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../css/footer.css" />
+    <link rel="stylesheet" href="../css/navbar.css" />
+
+    <style>
+      /* Styles for dark and light mode */
+      body.light-mode {
+        background-color: #f8f9fa;
+        color: #343a40;
+      }
+
+      .card.light-mode {
+        background-color: #ffffff;
+      }
+
+      body.dark-mode {
+        background-color: #343a40;
+        color: #f8f9fa;
+      }
+
+      .card.dark-mode {
+        background-color: #495057;
+      }
+
+      /* Toggle Button Styles */
+      .toggle-mode-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+      }
+
+      .filter-bar {
+        margin-bottom: 30px;
+      }
+
+      .product-card {
+        margin-bottom: 30px;
+      }
+
+      .card-img-top {
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .card-body {
+        text-align: center;
+      }
+
+      .navbar {
+        margin-bottom: 30px;
+      }
+
+      footer {
+        padding: 10px 0;
+        background-color: #6c757d;
+        color: #fff;
+      }
+
+      footer a {
+        color: #fff;
+      }
+
+      footer a:hover {
+        color: #adb5bd;
+      }
+    </style>
+  </head>
+  <body class="light-mode">
+    <!-- Navbar -->
+    <%- include('../component/navbar.ejs') %>
+
+
+
+
+
+
+
+
+
+    <!-- Filter and Search Bar -->
+    <div class="container">
+      <div class="filter-bar row">
+        <div class="col-md-8 mb-3 mb-md-0">
+          <form action="/search" method="post">
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                name="search"
+                class="form-control"
+                id="searchInput"
+                placeholder="Search for products..."
+              />
+              <button type="submit" class="btn btn-primary mx-2" id="searchButton">Search</button>
+            </div>
+            
+          </form>
+        </div>
+        <div class="col-md-4">
+          <select class="form-control" id="categorySelect">
+            <option value="all">All Categories</option>
+            <option value="electronics">Electronics</option>
+            <option value="fashion">Fashion</option>
+            <option value="home">Home</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="row" id="productGrid">
+        <!-- Sample Product Card -->
+        <% if (products !== null) { %>
+        <% products.forEach(item => { %>
+        <div class="col-md-3 product-card">
+          <div class="card shadow-sm">
+            <img
+              src="<%= item.images[0] %>"
+              class="card-img-top w-100"
+              alt="Product 1"
+              style="height: 250px"
+            />
+            <div class="card-body">
+              <h5 class="card-title"><%= item.productname %></h5>
+              <!-- get the first 10 words only of description -->
+              <% let text = item.discription; let words = text.split(' '); let
+              first10words = words.slice(0, 7); first10words.join(' '); %>
+              <p class="card-text"><%= first10words %></p>
+              <p class="card-text">
+                <strong>Price:</strong> $<%= item.price %>
+              </p>
+              <a href="#" class="btn btn-primary">Buy Now</a>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+<% } %>
+
+        <!-- Add more products as needed -->
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <%- include('../component/footer.ejs') %>
+
+    <!-- Toggle Button -->
+    <button class="btn btn-secondary toggle-mode-btn" id="toggle-mode">
+      <i class="fas fa-moon"></i>
+    </button>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      // Toggle Dark/Light Mode
+      document
+        .getElementById("toggle-mode")
+        .addEventListener("click", function () {
+          document.body.classList.toggle("dark-mode");
+          document
+            .querySelectorAll(".card")
+            .forEach((card) => card.classList.toggle("dark-mode"));
+          this.innerHTML = document.body.classList.contains("dark-mode")
+            ? '<i class="fas fa-sun"></i> '
+            : '<i class="fas fa-moon"></i> ';
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= mytitle %></title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../css/footer.css" />
+    <link rel="stylesheet" href="../css/navbar.css" />
+
+    <style>
+      /* Styles for dark and light mode */
+      body.light-mode {
+        background-color: #f8f9fa;
+        color: #343a40;
+      }
+
+      .card.light-mode {
+        background-color: #ffffff;
+      }
+
+      body.dark-mode {
+        background-color: #343a40;
+        color: #f8f9fa;
+      }
+
+      .card.dark-mode {
+        background-color: #495057;
+      }
+
+      /* Toggle Button Styles */
+      .toggle-mode-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+      }
+
+      .product-images {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .product-images img {
+        max-width: 100%;
+        max-height: 400px;
+        object-fit: contain;
+        margin-bottom: 15px;
+      }
+
+      .product-details {
+        margin-top: 20px;
+      }
+
+      .ratings i {
+        color: #ffcc00;
+      }
+
+      .related-products {
+        margin-top: 30px;
+      }
+
+      footer {
+        padding: 10px 0;
+        background-color: #6c757d;
+        color: #fff;
+      }
+
+      footer a {
+        color: #fff;
+      }
+
+      footer a:hover {
+        color: #adb5bd;
+      }
+    </style>
+  </head>
+  <body class="light-mode">
+    <!-- Navbar -->
+    <%- include('../component/navbar.ejs') %>
+
+    <!-- Product Details Section -->
+    <div class="container mt-5">
+      <div class="row">
+        <!-- Product Images -->
+<% if (ProductData) { %>
+  <div class="col-md-6 product-images" >
+    <img id="img-1" <% if (ProductData.images.length > 0) { %> src="<%=
+    ProductData.images[0] %>" <% } else { %>
+    src="https://via.placeholder.com" <% } %> style="width:
+    450px;height:450px;" alt="Product Image">
+    <div>
+      <img id="img-2" <% if (ProductData.images.length > 1) { %> src="<%=
+      ProductData.images[1] %>" <% } else { %>
+      src="https://via.placeholder.com/100" <% } %> alt="Product Image 1"
+      class="img-thumbnail" style="width: 100px;height: 100px;">
+
+      <img id="img-3"<% if (ProductData.images.length > 2) { %> src="<%=
+      ProductData.images[2] %>" <% } else { %>
+      src="https://via.placeholder.com/100" <% } %> alt="Product Image 2"
+      class="img-thumbnail" style="width: 100px;height: 100px;">
+
+      <img id="img-4"<% if (ProductData.images.length > 3) { %> src="<%=
+      ProductData.images[3] %>" <% } else { %>
+      src="https://via.placeholder.com/100" <% } %> alt="Product Image 3"
+      class="img-thumbnail" style="width: 100px;height: 100px;">
+
+    </div>
+  </div>
+<% } %>
+
+
+
+        <!-- Product Details -->
+
+        <div class="col-md-6 product-details">
+<% if (ProductData !== null && productsAll !== null) { %>
+ 
+  <h2><%= ProductData.productname ? ProductData.productname : "  productname is not defind " %></h2>
+  <div class="ratings">
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+    <i class="far fa-star"></i>
+    <span>(5 reviews)</span>
+  </div>
+  <p class="price"><strong>Price:</strong> $<%= ProductData.price %></p>
+  <p class="description">
+    <%= ProductData.discription %>
+  </p>
+    <form action="/addtocard/<%= ProductData._id %>" method="post">
+      <button class="btn btn-primary btn-lg" type="submit">
+      <i class="fas fa-shopping-cart"></i> Add to Cart
+    </button>
+    </form>
+
+
+
+
+
+        </div>
+      </div>
+
+      <!-- Related Products -->
+
+       <% let categoryvalue = ProductData.category ; let arrProduct =[]; %>
+
+        <% productsAll.forEach(item => { %>
+          <% if (item.category == categoryvalue) { %>
+           <% arrProduct.push(item) %>
+          <% } %>
+         <% }) %>
+
+
+      <div class="related-products">
+
+        <h3>Related Products</h3>
+
+        <div class="row">
+<% if (arrProduct.length > 0) { %>
+ 
+
+
+  <% for( let index = 0; index < 4; index++ ) { %>
+    <div class="col-md-3">
+      <div class="card shadow-sm">
+
+        <img <% if (arrProduct.length > index) { %> src="<%=
+        arrProduct[index].images[index] %>" <% } else { %>
+          src="https://via.placeholder.com/300" <% } %>
+          class="card-img-top"
+          alt="Related Product 1"
+        />
+
+        <div class="card-body">
+
+          <% if (arrProduct.length > index) { %> 
+          <!-- one -->
+          <h5 class="card-title">  <%= arrProduct[index].productname ? arrProduct[index].productname : "productname is not defined" %>   </h5>
+          <p class="card-text"><strong>Price:</strong> $ <%= arrProduct[index].price ? arrProduct[index].price : "price is not defined" %></p>
+
+            <% } else { %>
+          <!-- two -->
+          <h5 class="card-title">  <%="productname is not defined" %>   </h5>
+          <p class="card-text"><strong>Price:</strong> $ <%= "price is not defined" %></p>
+              <% } %>
+
+
+
+
+
+          <% if (arrProduct.length > index ) { %>
+            <a href="/productdetails/<%= arrProduct[index]._id %>" class="btn btn-primary">View Product</a>
+          <% } else { %>
+            <a href="#" class="btn btn-primary">View Product</a>
+          <% } %>
+          
+        </div>
+      </div>
+    </div>
+  <% } %>
+
+
+
+<% } %>
+
+<% } %>
+
+
+
+
+
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <%- include('../component/footer.ejs') %>
+
+    <!-- Toggle Button -->
+    <button class="btn btn-secondary toggle-mode-btn" id="toggle-mode">
+      <i class="fas fa-moon"></i>
+    </button>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      let imgOne = document.getElementById('img-1')
+      let imgTwo = document.getElementById('img-2')
+      let imgThree = document.getElementById('img-3')
+      let imgFour = document.getElementById('img-4')
+      imgTwo.addEventListener('click', () => {
+        imgOne.src = imgTwo.src
+        imgTwo.style.transform = 'scale(1.1)';
+        imgThree.style.transform = 'scale(1)';
+        imgFour.style.transform = 'scale(1)';
+      })
+      imgThree.addEventListener('click', () => {
+        imgOne.src = imgThree.src
+        imgThree.style.transform = 'scale(1.1)';
+        imgFour.style.transform = 'scale(1)';
+        imgTwo.style.transform = 'scale(1)';
+
+      })
+      imgFour.addEventListener('click', () => {
+        imgOne.src = imgFour.src
+        imgFour.style.transform = 'scale(1.1)';
+        imgTwo.style.transform = 'scale(1)';
+        imgThree.style.transform = 'scale(1)';
+
+      })
+
+
+
+    </script>
+  
+  <script>
+      // Toggle Dark/Light Mode
+      document
+        .getElementById("toggle-mode")
+        .addEventListener("click", function () {
+          document.body.classList.toggle("dark-mode");
+          document
+            .querySelectorAll(".card")
+            .forEach((card) => card.classList.toggle("dark-mode"));
+          this.innerHTML = document.body.classList.contains("dark-mode")
+            ? '<i class="fas fa-sun"></i> '
+            : '<i class="fas fa-moon"></i> ';
+        });
+    </script>
+  </body>
+</html>

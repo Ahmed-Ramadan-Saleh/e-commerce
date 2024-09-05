@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #ecf0f1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+      }
+
+      .login-container {
+        background-color: #ffffff;
+        padding: 40px 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .login-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #2c3e50;
+      }
+
+      .login-container .form-group {
+        margin-bottom: 20px;
+      }
+
+      .login-container label {
+        display: block;
+        margin-bottom: 5px;
+        color: #34495e;
+      }
+
+      .login-container input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+      }
+
+      .login-container input:focus {
+        outline: none;
+        border-color: #3498db;
+      }
+
+      .login-container button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #3498db;
+        color: #ffffff;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .login-container button:hover {
+        background-color: #2980b9;
+      }
+
+      .login-container .forgot-password {
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      .login-container .forgot-password a {
+        color: #3498db;
+        text-decoration: none;
+      }
+
+      .login-container .forgot-password a:hover {
+        text-decoration: underline;
+      }
+      #emailerror,
+      #passworderror {
+        color: red;
+        font-weight: 600;
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <h2>Admin Login</h2>
+        <form id="formLogin">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <p id="emailerror"></p>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+        <p id="passworderror"></p>
+
+            <button type="submit">Login</button>
+            <div class="forgot-password">
+                <a href="#">Forgot password?</a>
+            </div>
+        </form>
+<script>
+      formLogin.addEventListener("submit", async (e) => {
+        emailerror.textContent = "";
+        passworderror.textContent = "";
+        e.preventDefault();
+
+        const res = await fetch("/admin/login", {
+          method: "POST",
+          body: JSON.stringify({
+            email: email.value,
+            password: password.value,
+          }),
+          headers: { "Content-Type": "application/json" },
+        });
+
+        const data = await res.json();
+
+
+
+        if (data.wrongEmail) {
+          emailerror.textContent = data.wrongEmail;
+        }
+        if (data.wrongPassword) {
+          passworderror.textContent = data.wrongPassword;
+        }
+        if (data.id) {
+          console.log(data.id)
+          location.assign("/admin/dashboard");
+          
+        }
+      });
+</script>
+
+        <!-- <br><hr><br> -->
+
+      <!-- <h2>Register</h2>
+      <form id="formRegister">
+        <div class="form-group">
+          <label for="username">username</label>
+          <input
+            type="text"
+            id="username_id"
+            name="username"
+            placeholder="Enter your username"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email_id"
+            name="email"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+        <p id="emailerror"></p>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password_id"
+            name="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+        <p id="passworderror"></p>
+
+        <button type="submit">Register</button>
+      </form>
+    </div>
+    <script>
+      formRegister.addEventListener("submit", async (e) => {
+        emailerror.textContent = "";
+        passworderror.textContent = "";
+        e.preventDefault();
+
+        const res = await fetch("/admin/signup", {
+          method: "POST",
+          body: JSON.stringify({
+            username: username_id.value,
+            email: email_id.value,
+            password: password_id.value,
+          }),
+          headers: { "Content-Type": "application/json" },
+        });
+
+        const data = await res.json();
+
+        if (data.validationerrors) {
+          data.validationerrors.forEach(item => {
+            if (item.path == 'password') {
+              passworderror.textContent = item.msg;
+            }
+            if (item.path == 'email') {
+              emailerror.textContent = item.msg;
+            }
+          });
+        }
+
+        if (data.emailExisted) {
+          emailerror.textContent =data.emailExisted ;
+        }
+        if (data.id) {
+          console.log(data.id)
+          location.assign("/admin/dashboard");
+          
+        }
+      });
+    </script> -->
+  </body>
+</html>
